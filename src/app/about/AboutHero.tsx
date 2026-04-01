@@ -9,7 +9,7 @@ export default function AboutHero() {
 
       <div className="w-full relative aspect-[16/8] overflow-hidden rounded-[1.5rem] shadow-[0_8px_40px_rgba(0,0,0,0.08)] bg-gray-100 z-0  ">
         <img
-          src="/about/About-Hero.png"
+          src="/About/About-Hero.png"
           alt="Hexa AI Team working on screens"
           className="w-full h-full object-cover rounded-"
         />

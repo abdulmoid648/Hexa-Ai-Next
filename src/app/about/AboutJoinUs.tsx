@@ -9,7 +9,8 @@ export default function AboutJoinUs() {
             Join us to shape the future of human-technology interaction
           </h2>
           <p className="text-[14px] text-gray-500 mb-10 leading-relaxed font-medium max-w-[340px]">
-            We&apos;re always looking for talented and driven minds from diverse backgrounds to join our team.
+            We&apos;re always looking for talented and driven minds from diverse
+            backgrounds to join our team.
           </p>
           <button className="bg-[#3D3D3D] hover:bg-black transition-colors text-white text-[13px] tracking-wide font-medium px-6 py-2.5 rounded-lg shadow-md hover:shadow-lg">
             See Openings
@@ -19,25 +20,40 @@ export default function AboutJoinUs() {
           <div className="flex flex-col justify-center pt-8 md:pt-16">
             {/* Left Img */}
             <div className="relative w-full aspect-[2/3] rounded-[1.25rem] md:rounded-[2rem] overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-              <img src="/about/Join3.jpg" alt="Join our team" className="absolute inset-0 w-full h-full object-cover" />
+              <img
+                src="/About/Join3.jpg"
+                alt="Join our team"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
             </div>
           </div>
 
           <div className="flex flex-col gap-3 md:gap-5 pt-0 translate-y-2 md:translate-y-10">
-
             {/* Middle Top */}
             <div className="relative w-full aspect-square md:aspect-[3/3] rounded-[1.25rem] md:rounded-[2rem] overflow-hidden shadow-sm hover:shadow-md transition-shadow ">
-              <img src="/about/Join1.jpg" alt="Team brainstorming" className="absolute inset-0 w-full h-full object-cover" />
+              <img
+                src="/About/Join1.jpg"
+                alt="Team brainstorming"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
             </div>
             {/* Middle Bottom */}
             <div className="relative w-full aspect-square md:aspect-[3/3] rounded-[1.25rem] md:rounded-[2rem] overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-              <img src="/about/Join4.png" alt="Developer smiling" className="absolute inset-0 w-full h-full object-cover" />
+              <img
+                src="/About/Join4.png"
+                alt="Developer smiling"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
             </div>
           </div>
           {/* Right Img */}
           <div className="flex flex-col justify-center pt-16 md:pt-32 -translate-y-2 md:-translate-y-4">
             <div className="relative w-full aspect-[2/3] md:aspect-[2/3] rounded-[1.25rem] md:rounded-[2rem] overflow-hidden shadow-sm hover:shadow-md transition-shadow trans">
-              <img src="/about/Join2.png" alt="Team strategy meeting" className="absolute inset-0 w-full h-full object-cover" />
+              <img
+                src="/About/Join2.png"
+                alt="Team strategy meeting"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
             </div>
           </div>
         </div>

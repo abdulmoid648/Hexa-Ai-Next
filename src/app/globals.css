@@ -129,7 +129,11 @@ body.nav-dropdown-open {
 
 /* ─── Custom Scrollbar ─── */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-button {
+  display: none;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -139,6 +143,7 @@ body.nav-dropdown-open {
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 10px;
+  min-height: 1px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
@@ -156,6 +161,8 @@ body.nav-dropdown-open {
 }
 
 .hide-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
