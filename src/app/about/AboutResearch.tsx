@@ -4,7 +4,7 @@ export default function AboutResearch() {
       {/* Background GIF with overlay for text legibility */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url("/about/Research.gif")' }}
+        style={{ backgroundImage: 'url("/About/Research.gif")' }}
       />
       <div className="absolute inset-0 z-0 bg-white/85 backdrop-blur-[1px]" />
 
