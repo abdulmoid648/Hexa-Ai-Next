@@ -29,6 +29,12 @@ const Footer = () => {
             About Us
           </Link>
           <Link
+            href="/careers"
+            className="text-sm text-gray-400 hover:text-[#00A3FF] transition-colors"
+          >
+            Careers
+          </Link>
+          <Link
             href="/contact"
             className="text-sm text-gray-400 hover:text-[#00A3FF] transition-colors"
           >
