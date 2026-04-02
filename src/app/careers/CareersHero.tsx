@@ -22,8 +22,55 @@ export default function CareersHero() {
         </p>
       </div>
 
-      {/* Staggered Masonry Image Collage */}
-      <div className="w-full max-w-[1200px] mx-auto flex flex-col md:flex-row justify-center items-center md:items-stretch gap-4 lg:gap-6 relative z-10">
+      {/* MOBILE Staggered Image Collage (J2, J4, J3, J5) */}
+      <div className="flex md:hidden w-full px-2 gap-2 justify-center items-start relative z-10 mb-10">
+        {/* Left Column: J2 */}
+        <div className="w-[32%] mt-6 relative rounded-2xl overflow-hidden aspect-[2/3] shadow-sm">
+          <div 
+            className="absolute inset-0 z-10 mix-blend-overlay"
+            style={{ background: 'linear-gradient(to bottom, rgba(238, 16, 229, 0.8) 0%, transparent 40%)' }}
+          />
+          <Image src="/Careers/J2.png" alt="Guy in hoodie" fill className="object-cover" />
+        </div>
+
+        {/* Middle Column: J4 & J3 */}
+        <div className="w-[36%] flex flex-col gap-3">
+          <div className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-sm">
+            <Image src="/Careers/J4.png" alt="Meeting" fill className="object-cover" />
+          </div>
+          
+          <div className="relative mt-1">
+            {/* Decorative Card */}
+            <div 
+              className="absolute inset-0 rounded-2xl -z-10 translate-x-2 translate-y-2 p-[2px]"
+              style={{ background: 'linear-gradient(125deg, rgba(238, 16, 229, 1) 40%, rgba(14, 165, 233, 1) 70%)' }}
+            >
+              <div className="w-full h-full bg-white rounded-2xl" />
+            </div>
+            {/* Main Image */}
+            <div 
+              className="relative w-full overflow-hidden p-[2px] rounded-2xl aspect-[4/3] shadow-sm"
+              style={{ background: 'linear-gradient(135deg, rgba(14,165,233,1), rgba(238,16,229,1))' }}
+            >
+              <div className="absolute inset-[2px] rounded-[14px] overflow-hidden bg-white">
+                <Image src="/Careers/J3.png" alt="Team selfie" fill className="object-cover" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column: J5 */}
+        <div className="w-[32%] mt-12 relative rounded-2xl overflow-hidden aspect-[2/3] shadow-sm">
+          <div 
+            className="absolute inset-0 z-10 mix-blend-overlay"
+            style={{ background: 'linear-gradient(to top, rgba(238, 16, 229, 0.8) 0%, transparent 40%)' }}
+          />
+          <Image src="/Careers/J5.png" alt="Team member working back" fill className="object-cover" />
+        </div>
+      </div>
+
+      {/* DESKTOP Staggered Masonry Image Collage */}
+      <div className="hidden md:flex w-full max-w-[1200px] mx-auto flex-row justify-center items-stretch gap-4 lg:gap-6 relative z-10">
 
         {/* Column 1 */}
         <div className="flex flex-col gap-4 md:mt-24 w-full md:w-1/5 max-w-[280px]">
