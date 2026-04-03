@@ -1,5 +1,6 @@
 import React from 'react';
 import { Briefcase, Clock, Star, Layout, MapPin } from 'lucide-react';
+import Link from 'next/link';
 
 export default function JobContent() {
   const vacancyDetails = [
@@ -36,9 +37,12 @@ export default function JobContent() {
               ))}
             </div>
 
-            <button className="hidden lg:block bg-[#313131] hover:bg-black text-white px-10 py-3 rounded-xl font-medium transition-all text-base shadow-sm hover:shadow-md">
+            <Link 
+              href="/submit-resume"
+              className="hidden lg:block bg-[#313131] hover:bg-black text-white px-10 py-3 rounded-xl font-medium transition-all text-base shadow-sm hover:shadow-md text-center"
+            >
               Apply Now
-            </button>
+            </Link>
           </div>
 
           {/* Right Main Content */}
@@ -137,9 +141,12 @@ export default function JobContent() {
 
             {/* Mobile-only Apply Button, moved to end */}
             <div className="pt-8 lg:hidden flex justify-center">
-              <button className="w-full sm:w-auto bg-[#313131] hover:bg-black text-white px-10 py-4 rounded-xl font-medium transition-all text-base shadow-sm hover:shadow-md">
+              <Link 
+                href="/submit-resume" 
+                className="w-full sm:w-auto bg-[#313131] hover:bg-black text-white px-10 py-4 rounded-xl font-medium transition-all text-base shadow-sm hover:shadow-md text-center block"
+              >
                 Apply Now
-              </button>
+              </Link>
             </div>
 
           </div>

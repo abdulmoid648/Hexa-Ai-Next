@@ -32,7 +32,7 @@ const Navbar = () => {
   const navLinks = [
     { name: "Product", href: "/product", hasDropdown: true },
     { name: "Use Cases", href: "/about" },
-    { name: "Pricing", href: "/#pricing" },
+    { name: "Pricing", href: "/pricing" },
     { name: "Integrations", href: "/integrations" },
   ];
 
@@ -70,9 +70,9 @@ const Navbar = () => {
 
   return (
     <nav className="relative w-full bg-white backdrop-blur-xl border-b border-gray-200 h-20 sticky top-0 z-50 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-full relative">
+      <div className="max-w-7xl mx-auto flex items-center justify-between h-full relative" suppressHydrationWarning>
         {/* Mobile: Hamburger Button (Left) */}
-        <div className="flex md:hidden items-center">
+        <div className="flex md:hidden items-center" suppressHydrationWarning>
           <button
             className="p-2 text-gray-800 hover:text-gray-900 focus:outline-none"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -120,9 +120,10 @@ const Navbar = () => {
         </Link>
 
         {/* Center: Nav Links (Desktop) */}
-        <div className="hidden md:flex items-center gap-8 h-full">
+        <div className="hidden md:flex items-center gap-8 h-full" suppressHydrationWarning>
           {navLinks.map((link) => (
             <div
+              suppressHydrationWarning
               key={link.name}
               className="h-full flex items-center"
               onMouseEnter={() =>
@@ -182,7 +183,7 @@ const Navbar = () => {
         </div>
 
         {/* Right Side Actions (Desktop & Mobile "Get Started") */}
-        <div className="flex items-center gap-4 sm:gap-6">
+        <div className="flex items-center gap-4 sm:gap-6" suppressHydrationWarning>
           <Link
             href="/login"
             className="hidden md:block text-sm text-gray-700 font-medium hover:text-gray-900 transition-colors duration-150"

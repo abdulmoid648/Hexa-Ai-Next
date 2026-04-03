@@ -90,9 +90,12 @@ export default function CareersRoles() {
         <h3 className="text-2xl md:text-[28px] font-medium text-gray-800 mb-6 tracking-tight">
           Couldn't find your position?
         </h3>
-        <button className="bg-[#313131] hover:bg-[#1a1a1a] text-white px-8 py-3 rounded-xl font-medium transition-colors text-sm">
+        <Link 
+          href="/submit-resume"
+          className="bg-[#313131] hover:bg-[#1a1a1a] text-white px-8 py-3 rounded-xl font-medium transition-colors text-sm text-center inline-block"
+        >
           Send your Resume
-        </button>
+        </Link>
       </div>
 
     </section>

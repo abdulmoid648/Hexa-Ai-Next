@@ -38,14 +38,14 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[#f5f7fa] text-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24">
+    <main className="min-h-screen bg-[#f5f7fa] text-gray-900" suppressHydrationWarning>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24" suppressHydrationWarning>
         {/* CONNECT heading */}
         <h1 className="text-right text-5xl sm:text-6xl lg:text-8xl font-medium tracking-tight mb-20 select-none">
           <span className="bg-gradient-to-r from-[rgba(14,165,233,1)] to-[rgba(238,16,229,1)] bg-clip-text text-transparent">CONNECT</span>
         </h1>
 
-        <div className="flex flex-col-reverse lg:flex-row gap-12 lg:gap-16 items-start">
+        <div className="flex flex-col-reverse lg:flex-row gap-12 lg:gap-16 items-start" suppressHydrationWarning>
           {/* Left Side — Image Card */}
           <div className="w-full lg:w-[480px] shrink-0 flex justify-center lg:justify-start">
             <div className="relative w-[380px] sm:w-[450px]">
@@ -57,6 +57,7 @@ export default function Home() {
                     src="/Connect.png"
                     alt="Contact Us"
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-contain translate-y-29 scale-x-[-1]"
                     priority
                   />
@@ -71,6 +72,7 @@ export default function Home() {
                       alt="Logo"
                       width={50}
                       height={50}
+                      style={{ width: "auto", height: "auto" }}
                       className="object-contain"
                     />
                   </div>

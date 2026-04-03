@@ -7,6 +7,7 @@ export default function JobDetailsHero() {
       <div
         className="hidden md:block absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/Careers/Rolesbg.gif')" }}
+        suppressHydrationWarning
       />
       {/* Lightening Overlay - Only visible on md+ screens */}
       <div className="hidden md:block absolute inset-0 bg-white/70 pointer-events-none" />
