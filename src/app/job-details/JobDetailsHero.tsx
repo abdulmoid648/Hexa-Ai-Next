@@ -32,10 +32,20 @@ export default function JobDetailsHero() {
             <div className="relative">
               {/* Decorative card for Left Img */}
               <div
-                className="hidden md:block md:absolute inset-0 rounded-2xl md:rounded-3xl z-0 translate-x-3 translate-y-10 p-[3px] bg-transparent"
-                style={{ background: 'linear-gradient(125deg, rgba(238, 16, 229, 1) 40%, rgba(14, 165, 233, 1) 70%)' }}
+                className="hidden md:block md:absolute inset-0 rounded-2xl md:rounded-3xl z-0 translate-x-3 translate-y-10"
               >
-                <div className="w-full h-full bg-white rounded-[13px] md:rounded-[21px]" />
+
+                <div
+                  className="absolute inset-0 rounded-2xl md:rounded-3xl p-[3px]"
+                  style={{
+                    background: 'linear-gradient(125deg, rgba(238, 16, 229, 1) 40%, rgba(14, 165, 233, 1) 70%)',
+                    WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                    WebkitMaskComposite: 'xor',
+                    maskComposite: 'exclude',
+                  }}
+                />
+
+                <div className="absolute inset-[3px] bg-white/40 backdrop-blur-md rounded-[13px] md:rounded-[21px]" />
               </div>
 
               {/* Main Image Card */}
@@ -57,10 +67,18 @@ export default function JobDetailsHero() {
             <div className="relative">
               {/* Decorative card for Middle Top */}
               <div
-                className="hidden md:block md:absolute inset-0 rounded-2xl md:rounded-3xl z-0 -translate-x-4 -translate-y-4 p-[3px]"
-                style={{ background: 'linear-gradient(125deg, rgba(238, 16, 229, 1) 40%, rgba(14, 165, 233, 1) 70%)' }}
+                className="hidden md:block md:absolute inset-0 rounded-2xl md:rounded-3xl z-0 -translate-x-4 -translate-y-4"
               >
-                <div className="w-full h-full bg-white rounded-[13px] md:rounded-[21px]" />
+                <div
+                  className="absolute inset-0 rounded-2xl md:rounded-3xl p-[3px]"
+                  style={{
+                    background: 'linear-gradient(125deg, rgba(238, 16, 229, 1) 40%, rgba(14, 165, 233, 1) 70%)',
+                    WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                    WebkitMaskComposite: 'xor',
+                    maskComposite: 'exclude',
+                  }}
+                />
+                <div className="absolute inset-[3px] bg-white/40 backdrop-blur-md rounded-[13px] md:rounded-[21px]" />
               </div>
               <div className="relative z-10 w-full aspect-square md:aspect-[3/2] rounded-2xl md:rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow p-[3px]">
                 <div className="w-full h-full rounded-[13px] md:rounded-[21px] overflow-hidden ">
@@ -88,10 +106,18 @@ export default function JobDetailsHero() {
             <div className="relative">
               {/* Decorative card for Right Img */}
               <div
-                className="hidden md:block md:absolute inset-0 rounded-2xl md:rounded-3xl z-0 -translate-x-4 -translate-y-4 p-[3px]"
-                style={{ background: 'linear-gradient(125deg, rgba(238, 16, 229, 1) 40%, rgba(14, 165, 233, 1) 70%)' }}
+                className="hidden md:block md:absolute inset-0 rounded-2xl md:rounded-3xl z-0 -translate-x-4 -translate-y-4"
               >
-                <div className="w-full h-full bg-white rounded-[13px] md:rounded-[21px]" />
+                <div
+                  className="absolute inset-0 rounded-2xl md:rounded-3xl p-[3px]"
+                  style={{
+                    background: 'linear-gradient(125deg, rgba(238, 16, 229, 1) 40%, rgba(14, 165, 233, 1) 70%)',
+                    WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                    WebkitMaskComposite: 'xor',
+                    maskComposite: 'exclude',
+                  }}
+                />
+                <div className="absolute inset-[3px] bg-white/40 backdrop-blur-md rounded-[13px] md:rounded-[21px]" />
               </div>
               <div className="relative z-10 w-full aspect-[2/3] rounded-2xl md:rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow p-[3px] -translate-x-3 md:-translate-x-0">
                 <div className="w-full h-full rounded-[13px] md:rounded-[21px] overflow-hidden bg-white">

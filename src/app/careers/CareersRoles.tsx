@@ -76,7 +76,7 @@ export default function CareersRoles() {
               </div>
 
               <div>
-                <Link href="#" className="text-[#00A3FF] font-semibold text-sm hover:underline">
+                <Link href="/job-details" className="text-[#00A3FF] font-semibold text-sm hover:underline">
                   View & Apply
                 </Link>
               </div>
@@ -90,7 +90,7 @@ export default function CareersRoles() {
         <h3 className="text-2xl md:text-[28px] font-medium text-gray-800 mb-6 tracking-tight">
           Couldn't find your position?
         </h3>
-        <Link 
+        <Link
           href="/submit-resume"
           className="bg-[#313131] hover:bg-[#1a1a1a] text-white px-8 py-3 rounded-xl font-medium transition-colors text-sm text-center inline-block"
         >
