@@ -41,7 +41,7 @@ export default function SubmitResumePage() {
       <div className="max-w-[1200px] mx-auto px-6 sm:px-8 lg:px-12" suppressHydrationWarning>
 
         {/* Breadcrumbs */}
-        <nav className="flex items-center gap-3 text-[12px] sm:text-[14px]  md:text-[18px] font-medium  mb-4 md:mb-24 select-none mt-10" suppressHydrationWarning>
+        <nav className="flex items-center gap-3 text-[10px] sm:text-[14px]  md:text-[18px] font-medium  mb-4 md:mb-24 select-none mt-10" suppressHydrationWarning>
           <Link href="/careers" className="text-gray-400 hover:text-gray-600 transition-colors">
             Careers
           </Link>
