@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
+import LayoutShell from "@/components/LayoutShell";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -27,11 +26,7 @@ export default function RootLayout({
       className={`${dmSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-black text-white font-sans" suppressHydrationWarning>
-        <Navbar />
-        <main className="flex-grow flex flex-col relative w-full overflow-hidden">
-          {children}
-        </main>
-        <Footer />
+        <LayoutShell>{children}</LayoutShell>
       </body>
     </html>
   );

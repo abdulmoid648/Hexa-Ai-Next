@@ -192,7 +192,7 @@ const Navbar = () => {
             Login
           </Link>
           <Link
-            href="/"
+            href="/signup"
             className="inline-flex items-center justify-center gap-2 bg-[#2D2D2D] text-white text-xs sm:text-sm font-medium rounded-xl hover:bg-gray-800 transition-all duration-150 h-10 sm:h-11 px-4 sm:px-6 shadow-sm"
             onClick={() => setActiveDropdown(null)}
           >
@@ -284,7 +284,7 @@ const Navbar = () => {
             Login
           </Link>
           <Link
-            href="/"
+            href="/signup"
             className="inline-flex items-center justify-center gap-2 bg-[#2D2D2D] text-white text-base font-medium px-8 py-3 rounded-xl hover:bg-gray-800 transition-colors mt-2 shadow-sm"
             onClick={() => setMenuOpen(false)}
           >
