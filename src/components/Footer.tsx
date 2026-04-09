@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-black border-t border-gray-900 py-12 px-4 sm:px-6 lg:px-8 mt-auto z-10 relative">
+    <footer className="w-full bg-white border-t border-gray-100 py-12 px-4 sm:px-6 lg:px-8 mt-auto z-10 relative">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6" suppressHydrationWarning>
         {/* Brand / Logo */}
         <div className="flex items-center gap-2">
@@ -14,9 +14,9 @@ const Footer = () => {
             width={24}
             height={24}
             style={{ width: "auto", height: "auto" }}
-            className="opacity-80"
+            className="opacity-90"
           />
-          <span className="text-gray-400 font-medium tracking-tight">
+          <span className="text-gray-900 font-medium tracking-tight">
             Hexa AI
           </span>
         </div>
@@ -25,50 +25,50 @@ const Footer = () => {
         <div className="flex flex-wrap justify-center gap-6 md:gap-8" suppressHydrationWarning>
           <Link
             href="/about"
-            className="text-sm text-gray-400 hover:text-[#00A3FF] transition-colors"
+            className="text-sm text-gray-500 hover:text-[#00A3FF] transition-colors"
           >
             About Us
           </Link>
           <Link
             href="/careers"
-            className="text-sm text-gray-400 hover:text-[#00A3FF] transition-colors"
+            className="text-sm text-gray-500 hover:text-[#00A3FF] transition-colors"
           >
             Careers
           </Link>
           <Link
             href="/job-details"
-            className="text-sm text-gray-400 hover:text-[#00A3FF] transition-colors"
+            className="text-sm text-gray-500 hover:text-[#00A3FF] transition-colors"
           >
             Job Details
           </Link>
           <Link
             href="/multilingual"
-            className="text-sm text-gray-400 hover:text-[#00A3FF] transition-colors"
+            className="text-sm text-gray-500 hover:text-[#00A3FF] transition-colors"
           >
             Multilingual
           </Link>
           <Link
             href="/contact"
-            className="text-sm text-gray-400 hover:text-[#00A3FF] transition-colors"
+            className="text-sm text-gray-500 hover:text-[#00A3FF] transition-colors"
           >
             Contact
           </Link>
           <Link
             href="/terms"
-            className="text-sm text-gray-400 hover:text-[#00A3FF] transition-colors"
+            className="text-sm text-gray-500 hover:text-[#00A3FF] transition-colors"
           >
             Terms of Service
           </Link>
           <Link
             href="/privacy"
-            className="text-sm text-gray-400 hover:text-[#00A3FF] transition-colors"
+            className="text-sm text-gray-500 hover:text-[#00A3FF] transition-colors"
           >
             Privacy Policy
           </Link>
         </div>
 
         {/* Copyright */}
-        <div className="text-xs text-gray-600">
+        <div className="text-xs text-gray-400">
           &copy; {new Date().getFullYear()} Hexa AI. All rights reserved.
         </div>
       </div>

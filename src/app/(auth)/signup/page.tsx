@@ -1,22 +1,45 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { Eye, EyeOff } from "lucide-react";
+import { apiPost } from "@/lib/api";
+import { signInWithGoogle, signInWithApple } from "@/actions/auth";
 
 export default function SignUpPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validations = useMemo(() => ({
+    minLength: password.length >= 8,
+    uppercase: /[A-Z]/.test(password),
+    lowercase: /[a-z]/.test(password),
+    special: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+    number: /[0-9]/.test(password),
+  }), [password]);
+
+  const allValid = Object.values(validations).every(Boolean);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // TODO: Implement sign up logic
-    setTimeout(() => setIsLoading(false), 2000);
+    setError("");
+
+    const res = await apiPost("/api/auth/register", { email, password });
+
+    if (res.success) {
+      router.push("/login");
+    } else {
+      setError(res.error || "Registration failed. Please try again.");
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -63,6 +86,13 @@ export default function SignUpPage() {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-[1.15rem]">
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-600 font-medium">
+              {error}
+            </div>
+          )}
+
           {/* Email */}
           <div className="flex flex-col gap-[0.35rem]">
             <label htmlFor="signup-email" className="text-[0.8rem] font-medium text-gray-700 tracking-wide">
@@ -141,11 +171,37 @@ export default function SignUpPage() {
             </div>
           </div>
 
+          {/* Password Requirements — only shown once user starts typing */}
+          {password.length > 0 && (
+          <ul className="flex flex-col gap-[0.3rem] text-[0.8rem] list-none pl-0 mt-1">
+            <li className="flex items-center gap-2">
+              <span className={`w-[6px] h-[6px] rounded-full ${validations.minLength ? 'bg-sky-500' : 'bg-gray-300'}`} />
+              <span className={validations.minLength ? 'text-gray-800 font-medium' : 'text-gray-400'}>Minimum characters 8</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <span className={`w-[6px] h-[6px] rounded-full ${validations.uppercase ? 'bg-sky-500' : 'bg-gray-300'}`} />
+              <span className={validations.uppercase ? 'text-gray-800 font-medium' : 'text-gray-400'}>One uppercase character</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <span className={`w-[6px] h-[6px] rounded-full ${validations.lowercase ? 'bg-sky-500' : 'bg-gray-300'}`} />
+              <span className={validations.lowercase ? 'text-gray-800 font-medium' : 'text-gray-400'}>One lowercase character</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <span className={`w-[6px] h-[6px] rounded-full ${validations.special ? 'bg-sky-500' : 'bg-gray-300'}`} />
+              <span className={validations.special ? 'text-gray-800 font-medium' : 'text-gray-400'}>One special character</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <span className={`w-[6px] h-[6px] rounded-full ${validations.number ? 'bg-sky-500' : 'bg-gray-300'}`} />
+              <span className={validations.number ? 'text-gray-800 font-medium' : 'text-gray-400'}>One number</span>
+            </li>
+          </ul>
+          )}
+
           {/* Submit Button */}
           <button
             type="submit"
             className="flex items-center justify-center w-full h-[2.75rem] mt-[0.35rem] px-6 text-[0.9rem] font-semibold text-white bg-gray-800 border-none rounded-xl cursor-pointer transition-all hover:bg-gray-900 hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] hover:-translate-y-px active:translate-y-0 disabled:opacity-70 disabled:cursor-not-allowed"
-            disabled={isLoading}
+            disabled={isLoading || !allValid}
             id="signup-submit"
           >
             {isLoading ? (
@@ -169,6 +225,7 @@ export default function SignUpPage() {
             type="button"
             className="flex items-center justify-center gap-[0.6rem] w-full h-[2.65rem] px-4 text-[0.85rem] font-medium text-gray-700 bg-white border-[1.5px] border-sky-500 rounded-xl cursor-pointer transition-all hover:bg-gray-50 hover:border-gray-300 hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)]"
             id="signup-google"
+            onClick={() => signInWithGoogle()}
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1Z" fill="#4285F4" />
@@ -183,6 +240,7 @@ export default function SignUpPage() {
             type="button"
             className="flex items-center justify-center gap-[0.6rem] w-full h-[2.65rem] px-4 text-[0.85rem] font-medium text-gray-700 bg-white border-[1.5px] border-sky-500 rounded-xl cursor-pointer transition-all hover:bg-gray-50 hover:border-gray-300 hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)]"
             id="signup-apple"
+            onClick={() => signInWithApple()}
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
               <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09ZM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25Z" />

@@ -1,0 +1,46 @@
+# Hexa AI "Connect Us" API Endpoints
+
+Source: https://api.gethexa.ai/api-docs
+
+## 1. Submit a Connect Us form
+- **Endpoint**: `POST /connect-us`
+- **Method**: `POST`
+- **Description**: Submits a lead/contact form to the Hexa AI team.
+- **Payload (JSON)**:
+  ```json
+  {
+    "firstName": "string (required, min 1, max 100)",
+    "lastName": "string (required, min 1, max 100)",
+    "email": "string (required, format: email)",
+    "companySize": "enum ['1 - 10', '11 - 50', '51 - 100', '101 - 500', '500+']",
+    "useCase": "enum ['Use Hexa AI for my company's phone operations', 'I want to help my clients implement AI voice agents', 'Build a product for my customers', 'Whitelabel and resell Hexa AI to my clients', 'Become a Hexa AI certified partner']",
+    "implementation": "enum ['Self-setup with my developers', 'Managed service by Hexa AI', 'Hybrid approach', 'Need consulting']",
+    "agentsCount": "enum ['Fewer than 10', '10 - 50', '51 - 100', '101 - 500', '500+']",
+    "message": "string",
+    "referralSource": "string"
+  }
+  ```
+
+## 2. Get all submissions (Admin)
+- **Endpoint**: `GET /connect-us`
+- **Method**: `GET`
+- **Authentication**: Bearer Auth (JWT)
+- **Description**: Retrieves a list of all form submissions.
+
+## 3. Get submission by ID (Admin)
+- **Endpoint**: `GET /connect-us/{id}`
+- **Method**: `GET`
+- **Authentication**: Bearer Auth (JWT)
+- **Description**: Retrieves details for a specific submission.
+
+## 4. Update submission status (Admin)
+- **Endpoint**: `PATCH /connect-us/{id}`
+- **Method**: `PATCH`
+- **Authentication**: Bearer Auth (JWT)
+- **Description**: Updates the status of a submission.
+- **Payload (JSON)**:
+  ```json
+  {
+    "status": "string (required)"
+  }
+  ```

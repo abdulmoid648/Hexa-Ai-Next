@@ -18,6 +18,7 @@ export default function ContactPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -27,14 +28,62 @@ export default function ContactPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+
+    // Validate all dropdown fields are selected
+    const requiredSelects = [
+      { field: "employees", label: "Number of employees" },
+      { field: "useCase", label: "How do you want to use Hexa AI" },
+      { field: "implementation", label: "Implementation method" },
+      { field: "agents", label: "Number of agents" },
+      { field: "useCaseText", label: "What's your use case" },
+      { field: "hearAbout", label: "How did you hear about us" },
+    ];
+
+    const missing = requiredSelects.find((s) => !formData[s.field as keyof typeof formData]);
+    if (missing) {
+      setError(`Please select an option for "${missing.label}".`);
+      return;
+    }
+
     setIsSubmitting(true);
-    setTimeout(() => {
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          companySize: formData.employees || undefined,
+          useCase: formData.useCase || undefined,
+          implementation: formData.implementation || undefined,
+          agentsCount: formData.agents || undefined,
+          message: formData.useCaseText || undefined,
+          referralSource: formData.hearAbout || undefined,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setSubmitted(true);
+        setFormData({
+          firstName: "", lastName: "", email: "", employees: "",
+          useCase: "", implementation: "", agents: "", useCaseText: "", hearAbout: "",
+        });
+        setTimeout(() => setSubmitted(false), 4000);
+      } else {
+        setError(data.error || "Submission failed. Please try again.");
+      }
+    } catch {
+      setError("Network error. Please try again.");
+    } finally {
       setIsSubmitting(false);
-      setSubmitted(true);
-      setTimeout(() => setSubmitted(false), 4000);
-    }, 1500);
+    }
   };
 
   return (
@@ -127,6 +176,13 @@ export default function ContactPage() {
           {/* Right Side — Form */}
           <div className="flex-1 w-full   ">
             <form onSubmit={handleSubmit} className="space-y-5">
+              {/* Error Message */}
+              {error && (
+                <div className="ml-0 lg:ml-20 bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-600 font-medium">
+                  {error}
+                </div>
+              )}
+
               {/* Row 1: First Name / Last Name */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5  ml-0 lg:ml-20">
                 <div>
@@ -200,16 +256,27 @@ export default function ContactPage() {
                   >
                     Number of employees work at your company?
                   </label>
-                  <div className="bg-white rounded-xl lg:max-w-lg">
-                    <input
+                  <div className="relative bg-white rounded-xl lg:max-w-lg">
+                    <select
                       id="employees"
                       name="employees"
-                      type="text"
-                      placeholder="1-10"
                       value={formData.employees}
                       onChange={handleChange}
-                      className="contact-input"
-                    />
+                      className="contact-select"
+                      required
+                    >
+                      <option value="">Select an option</option>
+                      <option value="1 - 10">1 - 10</option>
+                      <option value="11 - 50">11 - 50</option>
+                      <option value="51 - 100">51 - 100</option>
+                      <option value="101 - 500">101 - 500</option>
+                      <option value="500+">500+</option>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -230,12 +297,14 @@ export default function ContactPage() {
                       value={formData.useCase}
                       onChange={handleChange}
                       className="contact-select"
+                      required
                     >
                       <option value="">Select an option</option>
-                      <option value="my-company">Use for my company</option>
-                      <option value="clients">Use for my clients</option>
-                      <option value="personal">Personal use</option>
-                      <option value="other">Other</option>
+                      <option value="Use Hexa AI for my company's phone operations">Use Hexa AI for my company&apos;s phone operations</option>
+                      <option value="I want to help my clients implement AI voice agents">Help my clients implement AI voice agents</option>
+                      <option value="Build a product for my customers">Build a product for my customers</option>
+                      <option value="Whitelabel and resell Hexa AI to my clients">Whitelabel and resell Hexa AI</option>
+                      <option value="Become a Hexa AI certified partner">Become a Hexa AI certified partner</option>
                     </select>
                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                       <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -258,11 +327,13 @@ export default function ContactPage() {
                       value={formData.implementation}
                       onChange={handleChange}
                       className="contact-select"
+                      required
                     >
                       <option value="">Select an option</option>
-                      <option value="self">Self-setup with my developers</option>
-                      <option value="assisted">Assisted setup</option>
-                      <option value="managed">Fully managed</option>
+                      <option value="Self-setup with my developers">Self-setup with my developers</option>
+                      <option value="Managed service by Hexa AI">Managed service by Hexa AI</option>
+                      <option value="Hybrid approach">Hybrid approach</option>
+                      <option value="Need consulting">Need consulting</option>
                     </select>
                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                       <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -288,12 +359,14 @@ export default function ContactPage() {
                     value={formData.agents}
                     onChange={handleChange}
                     className="contact-select"
+                    required
                   >
                     <option value="">Select an option</option>
-                    <option value="fewer-10">Fewer than 10</option>
-                    <option value="10-50">10 - 50</option>
-                    <option value="50-200">50 - 200</option>
-                    <option value="200+">200+</option>
+                    <option value="Fewer than 10">Fewer than 10</option>
+                    <option value="10 - 50">10 - 50</option>
+                    <option value="51 - 100">51 - 100</option>
+                    <option value="101 - 500">101 - 500</option>
+                    <option value="500+">500+</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                     <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -320,6 +393,7 @@ export default function ContactPage() {
                     value={formData.useCaseText}
                     onChange={handleChange}
                     className="contact-input resize-none"
+                    required
                   />
                 </div>
               </div>
@@ -339,6 +413,7 @@ export default function ContactPage() {
                     value={formData.hearAbout}
                     onChange={handleChange}
                     className="contact-select"
+                    required
                   >
                     <option value="">Select an option</option>
                     <option value="google">Google Search</option>

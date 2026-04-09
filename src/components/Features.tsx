@@ -41,10 +41,10 @@ export const Features = () => {
   return (
     <section className="py-32 px-4 max-w-7xl mx-auto overflow-hidden">
       <div className="text-center mb-20 px-4">
-        <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">
+        <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-gray-900">
           Smarter is Now Faster.
         </h2>
-        <p className="text-lg text-white/50 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
            Discover the core pillars of Hexa AI's revolutionary platform. 
            Engineered for scale and built for trust.
         </p>
@@ -57,15 +57,15 @@ export const Features = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ delay: index * 0.1 }}
-            className="group glass p-8 rounded-3xl border border-white/10 hover:border-accent/40 transition-colors duration-500 hover:shadow-2xl hover:shadow-accent/5"
+            className="group bg-white p-8 rounded-3xl border border-gray-100 hover:border-accent/30 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.05)]"
           >
             <div className="mb-6 group-hover:scale-110 transition-transform duration-500">
               {feature.icon}
             </div>
-            <h3 className="text-2xl font-bold mb-4 tracking-tight group-hover:text-accent transition-colors">
+            <h3 className="text-2xl font-bold mb-4 tracking-tight text-gray-900 group-hover:text-accent transition-colors">
               {feature.title}
             </h3>
-            <p className="text-white/50 leading-relaxed group-hover:text-white/70 transition-colors">
+            <p className="text-gray-500 leading-relaxed group-hover:text-gray-700 transition-colors">
               {feature.description}
             </p>
           </motion.div>

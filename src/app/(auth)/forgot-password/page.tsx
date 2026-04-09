@@ -2,20 +2,28 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { apiPost } from "@/lib/api";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // TODO: Implement forgot password logic
-    setTimeout(() => {
-      setIsLoading(false);
+    setError("");
+
+    const res = await apiPost("/api/auth/forgot-password", { email });
+
+    setIsLoading(false);
+
+    if (res.success) {
       setEmailSent(true);
-    }, 1500);
+    } else {
+      setError(res.error || "Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -132,6 +140,13 @@ export default function ForgotPasswordPage() {
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="flex flex-col gap-[1.15rem] mt-8">
+              {/* Error Message */}
+              {error && (
+                <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-600 font-medium">
+                  {error}
+                </div>
+              )}
+
               {/* Email */}
               <div className="flex flex-col gap-[0.35rem]">
                 <div className="relative flex items-center border-[1.5px] border-sky-500 rounded-xl bg-white transition-all focus-within:shadow-[0_0_0_3px_rgba(14,165,233,0.1)]">

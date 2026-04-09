@@ -3,15 +3,22 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { Eye, EyeOff } from "lucide-react";
+import { apiPost } from "@/lib/api";
 
 export default function ResetPasswordPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token") || "";
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const validations = useMemo(() => ({
     minLength: password.length >= 8,
@@ -21,11 +28,37 @@ export default function ResetPasswordPage() {
     number: /[0-9]/.test(password),
   }), [password]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const allValid = Object.values(validations).every(Boolean);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (!allValid) {
+      setError("Please meet all password requirements");
+      return;
+    }
+
+    if (!token) {
+      setError("Reset token is missing. Please use the link sent to your email.");
+      return;
+    }
+
     setIsLoading(true);
-    // TODO: Implement password reset logic
-    setTimeout(() => setIsLoading(false), 2000);
+
+    const res = await apiPost("/api/auth/reset-password", { token, password });
+
+    if (res.success) {
+      router.push("/login");
+    } else {
+      setError(res.error || "Failed to reset password. Please try again.");
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -80,6 +113,13 @@ export default function ResetPasswordPage() {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-[1.15rem]">
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-600 font-medium">
+              {error}
+            </div>
+          )}
+
           {/* New Password */}
           <div className="flex flex-col gap-[0.35rem]">
             <label htmlFor="new-password" className="text-[0.8rem] font-medium text-gray-700 tracking-wide">
