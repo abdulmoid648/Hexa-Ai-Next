@@ -19,32 +19,64 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [emailSuccess, setEmailSuccess] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    if (name === "email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!value.trim()) {
+        setEmailError("Email is required");
+        setEmailSuccess(false);
+      } else if (!emailRegex.test(value)) {
+        setEmailError("Enter a valid email address");
+        setEmailSuccess(false);
+      } else {
+        setEmailError("");
+        setEmailSuccess(true);
+      }
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
-    // Validate all dropdown fields are selected
-    const requiredSelects = [
-      { field: "employees", label: "Number of employees" },
-      { field: "useCase", label: "How do you want to use Hexa AI" },
-      { field: "implementation", label: "Implementation method" },
-      { field: "agents", label: "Number of agents" },
-      { field: "useCaseText", label: "What's your use case" },
-      { field: "hearAbout", label: "How did you hear about us" },
+    // Validate all text fields and dropdowns
+    const requiredFields = [
+      "firstName",
+      "lastName",
+      "email",
+      "employees",
+      "useCase",
+      "implementation",
+      "agents",
+      "useCaseText",
+      "hearAbout",
     ];
 
-    const missing = requiredSelects.find((s) => !formData[s.field as keyof typeof formData]);
-    if (missing) {
-      setError(`Please select an option for "${missing.label}".`);
+    const isAnyFieldEmpty = requiredFields.some(
+      (field) => !formData[field as keyof typeof formData]?.trim()
+    );
+
+    if (isAnyFieldEmpty) {
+      setError(
+        "Please enter information in all text fields and select all dropdown options before submitting."
+      );
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setEmailError("Enter a valid email address");
+      setEmailSuccess(false);
       return;
     }
 
@@ -236,7 +268,7 @@ export default function ContactPage() {
                   >
                     Email
                   </label>
-                  <div className="bg-white rounded-xl lg:max-w-lg">
+                  <div className={`bg-white rounded-xl lg:max-w-lg transition-all duration-200 border-2 ${emailError ? "border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.2)]" : emailSuccess ? "border-green-500 shadow-[0_0_10px_rgba(34,197,94,0.2)]" : "border-transparent"}`}>
                     <input
                       id="email"
                       name="email"
@@ -248,6 +280,16 @@ export default function ContactPage() {
                       required
                     />
                   </div>
+                  {emailError && (
+                    <p className="mt-1.5 text-sm text-red-500 font-medium ml-1">
+                      {emailError}
+                    </p>
+                  )}
+                  {emailSuccess && !emailError && (
+                    <p className="mt-1.5 text-sm text-green-500 font-medium ml-1">
+                      Looks good!
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label

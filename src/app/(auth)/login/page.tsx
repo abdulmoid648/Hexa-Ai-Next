@@ -16,9 +16,36 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [emailSuccess, setEmailSuccess] = useState(false);
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!value.trim()) {
+      setEmailError("Email is required");
+      setEmailSuccess(false);
+    } else if (!emailRegex.test(value)) {
+      setEmailError("Enter a valid email address");
+      setEmailSuccess(false);
+    } else {
+      setEmailError("");
+      setEmailSuccess(true);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError("Enter a valid email address");
+      setEmailSuccess(false);
+      return;
+    }
+
     setIsLoading(true);
     setError("");
 
@@ -89,7 +116,7 @@ export default function LoginPage() {
             <label htmlFor="login-email" className="text-[0.8rem] font-medium text-gray-700 tracking-wide">
               Email
             </label>
-            <div className="relative flex items-center border-[1.5px] border-sky-500 rounded-xl bg-white transition-all focus-within:shadow-[0_0_0_3px_rgba(14,165,233,0.1)]">
+            <div className={`relative flex items-center border-[1.5px] rounded-xl bg-white transition-all ${emailError ? "border-red-500 focus-within:shadow-[0_0_0_3px_rgba(239,68,68,0.1)]" : emailSuccess ? "border-green-500 focus-within:shadow-[0_0_0_3px_rgba(34,197,94,0.1)]" : "border-sky-500 focus-within:shadow-[0_0_0_3px_rgba(14,165,233,0.1)]"}`}>
               <svg
                 className="w-[1.15rem] h-[1.15rem] ml-[0.875rem] text-gray-400 shrink-0"
                 viewBox="0 0 20 20"
@@ -109,12 +136,22 @@ export default function LoginPage() {
                 type="email"
                 placeholder="Enter your email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmailChange}
                 className="flex-1 py-[0.7rem] px-[0.875rem] text-sm text-gray-800 bg-transparent border-none outline-none font-inherit placeholder:text-gray-400"
                 required
                 autoComplete="email"
               />
             </div>
+            {emailError && (
+              <p className="text-[0.8rem] text-red-500 font-medium ml-1">
+                {emailError}
+              </p>
+            )}
+            {emailSuccess && !emailError && (
+              <p className="text-[0.8rem] text-green-500 font-medium ml-1">
+                Looks good!
+              </p>
+            )}
           </div>
 
           {/* Password */}

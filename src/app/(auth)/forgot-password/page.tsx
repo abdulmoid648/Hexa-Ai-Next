@@ -171,6 +171,8 @@ export default function ForgotPasswordPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="flex-1 py-[0.7rem] px-[0.875rem] text-sm text-gray-800 bg-transparent border-none outline-none font-inherit"
+                    pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+                    title="Please enter a valid email address"
                     required
                     autoComplete="email"
                   />
