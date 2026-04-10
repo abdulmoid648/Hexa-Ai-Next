@@ -1,11 +1,7 @@
 const HEXA_API = process.env.HEXA_API_URL || "https://api.gethexa.ai";
 
-/**
- * POST /api/auth/forgot-password
- *
- * Proxies the forgot-password request to the Hexa AI backend.
- * The backend will send a real password reset email to the user.
- */
+/*POST /api/auth/forgot-password*/
+
 export async function POST(request: Request) {
   try {
     const { email } = await request.json();

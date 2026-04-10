@@ -2,12 +2,8 @@ import { cookies } from "next/headers";
 
 const HEXA_API = process.env.HEXA_API_URL || "https://api.gethexa.ai";
 
-/**
- * POST /api/auth/login
- *
- * Proxies the login request to the Hexa AI backend.
- * On success, stores the JWT access_token in an httpOnly cookie.
- */
+/*POST /api/auth/login*/
+
 export async function POST(request: Request) {
   try {
     const { email, password } = await request.json();
