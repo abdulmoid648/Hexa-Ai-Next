@@ -1,16 +1,54 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useClerk } from "@clerk/nextjs";
 
 import { Eye, EyeOff } from "lucide-react";
 import { apiPost } from "@/lib/api";
-import { signInWithGoogle, signInWithApple } from "@/actions/auth";
 
 export default function LoginPage() {
   const router = useRouter();
+  const clerk = useClerk();
+  // Force reload when returning from OAuth via browser back button (bfcache)
+  useEffect(() => {
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        // Page was restored from bfcache — event listeners are dead
+        window.location.reload();
+      }
+    };
+    window.addEventListener("pageshow", handlePageShow);
+    return () => window.removeEventListener("pageshow", handlePageShow);
+  }, []);
+
+  const handleSocialLogin = async (strategy: "oauth_google" | "oauth_apple") => {
+    try {
+      // Create a sign-in with the OAuth strategy directly
+      // This returns the external verification redirect URL
+      const si = await clerk.client.signIn.create({
+        strategy,
+        redirectUrl: window.location.origin + "/sso-callback",
+        actionCompleteRedirectUrl: window.location.origin + "/landing",
+      });
+
+      // Get the OAuth provider URL from the response
+      const redirectUrl = si.firstFactorVerification?.externalVerificationRedirectURL;
+
+      if (redirectUrl) {
+        // Manually redirect to the OAuth provider
+        window.location.href = redirectUrl.toString();
+      } else {
+        setError("Could not get redirect URL. Please try again.");
+      }
+    } catch (err: any) {
+      const errMsg = err?.errors?.[0]?.longMessage || err?.errors?.[0]?.message || err?.message || "";
+      console.error("Social login error:", err);
+      setError(errMsg || "Social login failed. Please try again.");
+    }
+  };
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -232,7 +270,7 @@ export default function LoginPage() {
             type="button"
             className="flex items-center justify-center gap-[0.6rem] w-full h-[2.65rem] px-4 text-[0.85rem] font-medium text-gray-700 bg-white border-[1.5px] border-sky-500 rounded-xl cursor-pointer transition-all hover:bg-gray-50 hover:border-gray-300 hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)]"
             id="login-google"
-            onClick={() => signInWithGoogle()}
+            onClick={() => handleSocialLogin("oauth_google")}
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1Z" fill="#4285F4" />
@@ -247,7 +285,7 @@ export default function LoginPage() {
             type="button"
             className="flex items-center justify-center gap-[0.6rem] w-full h-[2.65rem] px-4 text-[0.85rem] font-medium text-gray-700 bg-white border-[1.5px] border-sky-500 rounded-xl cursor-pointer transition-all hover:bg-gray-50 hover:border-gray-300 hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)]"
             id="login-apple"
-            onClick={() => signInWithApple()}
+            onClick={() => handleSocialLogin("oauth_apple")}
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
               <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09ZM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25Z" />
@@ -263,6 +301,7 @@ export default function LoginPage() {
             Sign Up
           </Link>
         </p>
+        <div id="clerk-captcha" />
       </div>
     </div>
   );

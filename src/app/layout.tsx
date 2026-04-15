@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import LayoutShell from "@/components/LayoutShell";
 import "./globals.css";
 
@@ -20,14 +21,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${dmSans.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col bg-black text-white font-sans" suppressHydrationWarning>
-        <LayoutShell>{children}</LayoutShell>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html
+        lang="en"
+        suppressHydrationWarning
+        className={`${dmSans.variable} h-full antialiased`}
+      >
+        <body className="min-h-full flex flex-col bg-black text-white font-sans" suppressHydrationWarning>
+          <LayoutShell>{children}</LayoutShell>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
