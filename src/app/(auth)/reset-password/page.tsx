@@ -44,11 +44,6 @@ function ResetPasswordComponent() {
       return;
     }
 
-    if (!token) {
-      setError("Reset token is missing. Please use the link sent to your email.");
-      return;
-    }
-
     setIsLoading(true);
 
     const res = await apiPost("/api/auth/reset-password", { token, password });

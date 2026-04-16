@@ -119,13 +119,6 @@ export default function ForgotPasswordPage() {
               <span className="text-sm">The link will be expired in 10 days</span>
             </div>
 
-            {/* Reset Password Link Just included to see the Reset Password  Page not included in real design */}
-            <Link
-              href="/reset-password"
-              className="mt-8 text-sky-500 font-semibold text-sm hover:underline transition-all"
-            >
-              Reset Password
-            </Link>
           </div>
         ) : (
           /* ── Form State ── */
@@ -195,6 +188,17 @@ export default function ForgotPasswordPage() {
             </form>
           </>
         )}
+
+        {/* Reset Password Link - Always shown */}
+        <div className="mt-8 flex flex-col items-center">
+          <Link
+            href="/reset-password"
+            className="text-sky-500 font-semibold text-sm hover:underline transition-all"
+          >
+            Reset Password
+          </Link>
+        </div>
+
       </div>
     </div>
   );

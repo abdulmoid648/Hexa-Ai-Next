@@ -12,16 +12,23 @@ import { apiPost } from "@/lib/api";
 export default function LoginPage() {
   const router = useRouter();
   const clerk = useClerk();
-  // Force reload when returning from OAuth via browser back button (bfcache)
+  // Force reload when returning from OAuth (back button or incomplete flow)
   useEffect(() => {
-    const handlePageShow = (event: PageTransitionEvent) => {
-      if (event.persisted) {
-        // Page was restored from bfcache — event listeners are dead
+    if (typeof window !== "undefined") {
+      const isPending = sessionStorage.getItem("oauth_pending");
+      if (isPending === "true") {
+        sessionStorage.removeItem("oauth_pending");
         window.location.reload();
       }
-    };
-    window.addEventListener("pageshow", handlePageShow);
-    return () => window.removeEventListener("pageshow", handlePageShow);
+
+      const handlePageShow = (event: PageTransitionEvent) => {
+        if (event.persisted) {
+          window.location.reload();
+        }
+      };
+      window.addEventListener("pageshow", handlePageShow);
+      return () => window.removeEventListener("pageshow", handlePageShow);
+    }
   }, []);
 
   const handleSocialLogin = async (strategy: "oauth_google" | "oauth_apple") => {
@@ -38,6 +45,8 @@ export default function LoginPage() {
       const redirectUrl = si.firstFactorVerification?.externalVerificationRedirectURL;
 
       if (redirectUrl) {
+        // Track the redirect in session storage so we know if the user returns without completing
+        sessionStorage.setItem("oauth_pending", "true");
         // Manually redirect to the OAuth provider
         window.location.href = redirectUrl.toString();
       } else {
